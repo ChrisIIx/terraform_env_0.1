@@ -19,13 +19,13 @@ resource "random_integer" "ri" {
 }
 
 # Create the resource group
-resource "azurerm_resource_group" "rg" {
-  name     = "myResourceGroup-${random_integer.ri.result}"
-  location = "eastus"
+resource "azurerm_resource_group" "rg-test-tf" {
+  name     = "RG-Terratest-${random_integer.ri.result}"
+  location = "west_europe"
 }
 
 # Create the Linux App Service Plan
-resource "azurerm_service_plan" "appserviceplan" {
+resource "azurerm_service_plan" "appservice-plan" {
   name                = "webapp-asp-${random_integer.ri.result}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -34,7 +34,7 @@ resource "azurerm_service_plan" "appserviceplan" {
 }
 
 # Create the web app, pass in the App Service Plan ID
-resource "azurerm_linux_web_app" "webapp" {
+resource "azurerm_linux_web_app" "webapp-test" {
   name                  = "webapp-${random_integer.ri.result}"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
